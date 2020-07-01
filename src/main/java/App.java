@@ -90,6 +90,6 @@ public class App {
             orderStringBuilder.append("Total: " + secondPromotion + " yuan\n");
             orderStringBuilder.append("===================================");
         }
-        return null;
+        return orderStringBuilder.toString();
     }
 }
