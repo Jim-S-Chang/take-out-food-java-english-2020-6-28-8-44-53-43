@@ -44,12 +44,12 @@ public class App {
             for (int i = 0; i < inputs.size(); i++) { // 对每一件输入的商品循环
                 if (item.getId().equals(inputIDs.get(i))) { // 找到输入的商品对应仓库的商品ID
                     if (secondSalesPromotionItemList.contains(inputIDs.get(i))) { // 该商品是否属于第二个优惠
-                        secondPromotion += (item.getPrice() / 2) * countList.get(i); // 计算第二个优惠的价格
+                        secondPromotion += (item.getPrice() / 2) * numberOfItems.get(i); // 计算第二个优惠的价格
                         salesItemName.add(item.getName()); // 获取商品名
                     } else { // 该商品没有第二个优惠
                         secondPromotion += item.getPrice() * numberOfItems.get(i); // 计算第二个优惠的价格
                     }
-                    total += item.getPrice() * numberOfItems.get(i); // 将该商品加入总价
+                    totalPrice += item.getPrice() * numberOfItems.get(i); // 将该商品加入总价
                     firstPromotion += item.getPrice() * numberOfItems.get(i); // 将该商品加入第二个优惠的价格
                     // 打印小票对应内容
                     orderStringBuilder.append(item.getName()).append(" x ").append(numberOfItems.get(i)).append(" = ").append((int) (item.getPrice() * numberOfItems.get(i))).append(" yuan\n");
@@ -65,15 +65,15 @@ public class App {
             firstPromotion -= 6;
         }
 
-        if(total <= firstPromotion && total <= secondPromotion){ // 没有优惠可以使用
-            orderStringBuilder.append("Total: " + total + " yuan\n");
+        if(totalPrice <= firstPromotion && totalPrice <= secondPromotion){ // 没有优惠可以使用
+            orderStringBuilder.append("Total: " + totalPrice + " yuan\n");
             orderStringBuilder.append("===================================");
-        }else if(firstPromotion < total && firstPromotion <= secondPromotion){ // 使用第一个优惠
+        }else if(firstPromotion < totalPrice && firstPromotion <= secondPromotion){ // 使用第一个优惠
             orderStringBuilder.append("Promotion used:\n");
             orderStringBuilder.append("Deduct 6 yuan when the order reaches 30 yuan, saving 6 yuan\n" + "-----------------------------------\n");
             orderStringBuilder.append("Total: " + firstPromotion + " yuan\n");
             orderStringBuilder.append("===================================");
-        }else if(secondPromotion < total && secondPromotion < firstPromotion){ // 使用第二个优惠
+        }else if(secondPromotion < totalPrice && secondPromotion < firstPromotion){ // 使用第二个优惠
             orderStringBuilder.append("Promotion used:\n");
             orderStringBuilder.append("Half price for certain dishes (");
             // 生成使用第二个优惠的商品的名字的字符串
@@ -85,7 +85,7 @@ public class App {
                 }
             }
             orderStringBuilder.append(saleItem.substring(1));
-            orderStringBuilder.append(")，saving " + (total - secondPromotion) + " yuan\n");
+            orderStringBuilder.append(")，saving " + (totalPrice - secondPromotion) + " yuan\n");
             orderStringBuilder.append("-----------------------------------\n");
             orderStringBuilder.append("Total: " + secondPromotion + " yuan\n");
             orderStringBuilder.append("===================================");
